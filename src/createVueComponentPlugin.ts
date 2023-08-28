@@ -23,6 +23,7 @@ export function createVueComponentPlugin(
 
     destroy() {
       if (this.vueApp) {
+        console.log('unmounting vue app');
         this.vueApp.unmount();
         this.vueApp = null;
       }
