@@ -8,16 +8,15 @@
 
 <script setup lang="ts">
 import {useEditorBuilder} from "./useEditorBuilder.ts";
-import {onBeforeUnmount, onMounted, ref} from "vue";
+import {onBeforeUnmount, onMounted} from "vue";
 import {editorConfig} from "./editorConfig.ts";
 
 const {holder, editor, initEditor, destroyEditor} = useEditorBuilder()
-const editorResult = ref<string | null>(null)
 
 onBeforeUnmount(destroyEditor)
 
 onMounted(() => {
-  const data = loadStored()
+  const data = localStorage.getItem("editorContent")
   initEditor({
     ...editorConfig,
     data: data ? JSON.parse(data) : null,
@@ -39,13 +38,6 @@ const save = async () => {
   const output = await editor.value.save()
   const outputString = JSON.stringify(output, null, 4)
   localStorage.setItem("editorContent", outputString)
-  editorResult.value = outputString
-}
-
-const loadStored = () => {
-  const outputString = localStorage.getItem("editorContent")
-  editorResult.value = outputString
-  return outputString
 }
 
 </script>
