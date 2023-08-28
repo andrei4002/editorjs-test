@@ -32,9 +32,6 @@ const clear = () => {
 
 const save = async () => {
   if (!editor.value) return;
-
-  console.log('saving');
-
   const output = await editor.value.save()
   const outputString = JSON.stringify(output, null, 4)
   localStorage.setItem("editorContent", outputString)
